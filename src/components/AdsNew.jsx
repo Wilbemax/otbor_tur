@@ -7,7 +7,8 @@ export const AsdNew = () => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0); // Храним индекс
-	const [image, setImage] = useState(null); // ✅ Храним файл, а не строку
+	const [image, setImage] = useState(null);
+	const [imageError, setImageError] = useState(''); 
 	const token = getCookies('token');
 
 	useEffect(() => {
@@ -47,8 +48,30 @@ export const AsdNew = () => {
 	}, [token]);
 
 	const handleImageChange = (e) => {
-		setImage(e.target.files[0]);
-	};
+        const file = e.target.files[0];
+        if (file) {
+            // Проверка типа файла
+            if (!['image/jpeg', 'image/png'].includes(file.type)) {
+                setImageError('Допустимы только файлы формата PNG или JPG.');
+                setImage(null);
+                return;
+            }
+
+            // Проверка размера файла
+            if (file.size > 2 * 1024 * 1024) {
+                setImageError('Размер файла не должен превышать 2 MB.');
+                setImage(null);
+                return;
+            }
+
+            // Если всё ок, сохраняем файл
+            setImageError(''); // Сбрасываем ошибку
+            setImage(file);
+        } else {
+            setImageError('Пожалуйста, выберите файл.');
+            setImage(null);
+        }
+    };
 	const handleCategoryChange = (e) => {
 		setSelectedCategoryIndex(parseInt(e.target.value, 10));
 	};
@@ -122,6 +145,7 @@ export const AsdNew = () => {
 						onChange={handleImageChange} // ✅ Обработчик загрузки файла
 					/>
                     <p>{"* только png или jpeg, размером  < 2mb"}</p>
+					{imageError && <p style={{ color: 'red' }}>{imageError}</p>}
 					<button onClick={handelSubmit}>Опубликовать</button>
 				</>
 			) : (
