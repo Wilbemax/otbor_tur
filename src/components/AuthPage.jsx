@@ -14,7 +14,7 @@ export const AuthPage = () => {
 
 		if (token) {
 			const checkToken = async () => {
-				const res = await fetch(' http://127.0.0.1:8000/test_token', {
+				const res = await fetch(' http://127.0.0.1:8000/test_token/', {
 					method: 'GET',
 					headers: {
 						'content-type': 'application/json',

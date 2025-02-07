@@ -13,7 +13,7 @@ export const AsdNew = () => {
 	useEffect(() => {
 		if (token) {
 			const checkToken = async () => {
-				const res = await fetch('http://127.0.0.1:8000/test_token', {
+				const res = await fetch('http://127.0.0.1:8000/test_token/', {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ export const AsdNew = () => {
 
 	useEffect(() => {
 		const getCategories = async () => {
-			const res = await fetch('http://127.0.0.1:8000/categories', {
+			const res = await fetch('http://127.0.0.1:8000/categories/', {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ export const AsdNew = () => {
 		setImage(e.target.files[0]);
 	};
 	const handleCategoryChange = (e) => {
-		setSelectedCategoryIndex(parseInt(e.target.value, 10));
+		setSelectedCategoryIndex(e.target.value);
 	};
 
 	const handelSubmit = async () => {
@@ -108,10 +108,10 @@ export const AsdNew = () => {
 					<select
 						value={selectedCategoryIndex}
 						onChange={handleCategoryChange}>
-						{categories.map((cat, index) => (
+						{categories.map((cat) => (
 							<option
 								key={cat.id}
-								value={index}>
+								value={cat.id}>
 								{cat.name}
 							</option>
 						))}

@@ -8,12 +8,13 @@ export const Categories = () => {
 	const [editCategory, setEditCategory] = useState({ id: null, name: '' });
 	const [newCat, setNewCat] = useState('');
 	const token = getCookies('token');
-
+	console.log(token);
+	
 	// Проверка токена
 	useEffect(() => {
 		if (token) {
 			const checkToken = async () => {
-				const res = await fetch('http://127.0.0.1:8000/test_token', {
+				const res = await fetch('http://127.0.0.1:8000/test_token/', {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
